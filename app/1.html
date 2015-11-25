@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>声音触发</title>
+</head>
+<body>
+	<style>
+		.btn{
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			background: #ccc;
+			margin: 10px;
+		}
+	</style>
+	<div class="title">
+		<p>如支持自动播放会自动播放</p>
+		<p>如无法自动播放下面为4种播放触发方式，刷新分别触发，有声音为通过</p>
+	</div>
+	<audio src="audio/pt.mp3" autoplay="autoplay" id="audio"></audio>
+	<div id="click" class="btn">click</div>
+	<div id="touchstart" class="btn">touchstart</div>
+	<div id="touchmove" class="btn">touchmove</div>
+	<div id="touchend" class="btn">touchend</div>
+	<script>
+		var audio = document.getElementById('audio');
+		var dc = document.getElementById('click');
+		var ts = document.getElementById('touchstart');
+		var tm = document.getElementById('touchmove');
+		var te = document.getElementById('touchend');
+		dc.addEventListener("click",function() {
+			audio.play();
+		});
+		ts.addEventListener("touchstart",function() {
+			audio.play();
+		});
+		tm.addEventListener("touchmove",function() {
+			audio.play();
+		});
+		te.addEventListener("touchend",function() {
+			audio.play();
+		});
+	</script>
+</body>
+</html>

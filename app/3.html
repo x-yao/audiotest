@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>声音连续播放</title>
+</head>
+<body>
+	<style>
+		.btn{
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			background: #ccc;
+			margin: 10px;
+		}
+	</style>
+	<div class="title">
+		<p>点击click1会播放脚步声</p>
+		<p>4秒后播放水声</p>
+		<p>再4秒播放failed声音</p>
+		<p>click2为点击后先播放暂停编号2，3声音，再按照click1的方式进行</p>
+	</div>
+	<audio src="audio/jb.mp3" id="audio1"></audio>
+	<audio src="audio/shui.mp3" id="audio2"></audio>
+	<audio src="audio/failed.mp3" id="audio3"></audio>
+	<div id="click1" class="btn">click1</div>
+	<div id="click2" class="btn">click2</div>
+	<script>
+		var audio1 = document.getElementById('audio1');
+		var audio2 = document.getElementById('audio2');
+		var audio3 = document.getElementById('audio3');
+		var c1 = document.getElementById('click1');
+		var c2 = document.getElementById('click2');
+		c1.addEventListener("click",function() {
+			audio1.play();
+			setTimeout(function(){
+				audio2.play();
+				setTimeout(function(){
+					audio3.play();
+				},4000)
+			},4000);
+		});
+		c2.addEventListener("click",function() {
+			audio2.play();
+			audio2.pause();
+			audio3.play();
+			audio3.pause();
+			audio1.play();
+			setTimeout(function(){
+				audio2.play();
+				setTimeout(function(){
+					audio3.play();
+				},4000)
+			},4000);
+		});
+	</script>
+</body>
+</html>

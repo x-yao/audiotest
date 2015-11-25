@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>声音同时播放</title>
+</head>
+<body>
+	<style>
+		.btn{
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			background: #ccc;
+			margin: 10px;
+		}
+	</style>
+	<div class="title">
+		<p>点击click1会播放第一首背景音乐</p>
+		<p>第二个为按钮音，正常情况点击应该同事播放</p>
+		<p>第三个为另外一个曲子</p>
+		<p>touchstart2和第二个click2为同一个声音，触发方式改为按住触发（模拟之前倒酒的那种形式）</p>
+		<p>触发方式的不同请刷新后测试</p>
+	</div>
+	<audio src="audio/nl.mp3" id="audio1"></audio>
+	<audio src="audio/bottom2.mp3" id="audio2"></audio>
+	<audio src="audio/pt.mp3" id="audio3"></audio>
+	<div id="click1" class="btn">click1</div>
+	<div id="click2" class="btn">click2</div>
+	<div id="click3" class="btn">click3</div>
+	<div id="touchstart2" class="btn">touchstart2</div>
+	<script>
+		var audio1 = document.getElementById('audio1');
+		var audio2 = document.getElementById('audio2');
+		var c1 = document.getElementById('click1');
+		var c2 = document.getElementById('click2');
+		var c3 = document.getElementById('click3');
+		var t2 = document.getElementById('touchstart2');
+		c1.addEventListener("click",function() {
+			audio1.play();
+		});
+		c2.addEventListener("click",function() {
+			audio2.play();
+		});
+		c3.addEventListener("click",function() {
+			audio3.play();
+		});
+		t2.addEventListener("touchstart",function() {
+			audio2.play();
+		});
+	</script>
+</body>
+</html>

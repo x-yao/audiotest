@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, shrink-to-fit=no">
+	<link rel="stylesheet" href="styles/iconfont.css">
+	<title>声音默认带控制栏</title>
+</head>
+<body>
+	<style>
+		.btn{
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			background: #ccc;
+			margin: 10px;
+		}
+	</style>
+	<div class="title">
+		<p>默认控制栏</p>
+	</div>
+	<audio src="audio/nl.mp3" id="audio1"></audio>
+	<div>
+		<span class="iconfont icon-bofang" id="play"></span>
+		<span class="iconfont icon-xitongjingyinquxiao" id="voice"></span>
+		<input type="range" id="v-range" value="100">
+	</div>
+	<div id="click1" class="btn">播放</div>
+	<div id="click2" class="btn">暂停</div>
+	<div id="click3" class="btn">音量+</div>
+	<div id="click4" class="btn">音量—</div>
+	<div id="click5" class="btn">静音</div>
+	<div id="click6" class="btn">跳到一半</div>
+	<div id="click7" class="btn">跳到开头</div>
+	<div id="display1" class="">总时长+文件名</div>
+	<div id="display2" class="">当前时间</div>
+	<div id="display3" class="">加载进度</div>
+	<script>
+		var audio1 = document.getElementById('audio1');
+		var c1 = document.getElementById('click1');
+		var c2 = document.getElementById('click2');
+		var c3 = document.getElementById('click3');
+		var c4 = document.getElementById('click4');
+		var c5 = document.getElementById('click5');
+		var c6 = document.getElementById('click6');
+		var c7 = document.getElementById('click7');
+		var vr = document.getElementById('v-range');
+		var play = document.getElementById('play');
+		var v = document.getElementById('voice');
+		var time = document.getElementById('display1');
+		var time2 = document.getElementById('display2');
+		var jindu = document.getElementById('display3');
+		vr.addEventListener("change",function() {
+			console.log(vr.value);
+			audio1.volume = vr.value/100;
+		});
+		audio1.addEventListener("timeupdate",function(){
+			time2.innerHTML = '当前时间'+audio1.currentTime;
+		})
+		audio1.addEventListener("canplay",function(e){
+			console.log("canplay");
+		})
+		audio1.addEventListener("loadstart",function(e){
+			console.log("loadstart");
+		})
+		audio1.addEventListener("progress",function(e){
+			var range = 0;
+		    var bf = this.buffered;
+		    var time = this.currentTime;
+
+		    while(!(bf.start(range) <= time && time <= bf.end(range))) {
+		        range += 1;
+		    }
+		    var loadStartPercentage = bf.start(range) / this.duration;
+		    var loadEndPercentage = bf.end(range) / this.duration;
+		    var loadPercentage = loadEndPercentage - loadStartPercentage;
+		    jindu.innerHTML = loadPercentage;
+		    console.log(loadPercentage);
+		})
+		c1.addEventListener("click",function() {
+			var reg = new RegExp('(\\s|^)' + "icon-bofang1" + '(\\s|$)');  
+		    play.className = play.className.replace(reg, ' icon-bofang');  
+			audio1.play();
+			time.innerHTML = '总时长+文件名:'+audio1.duration+audio1.currentSrc;
+			console.log(audio1);
+		});
+		c2.addEventListener("click",function() {
+			var reg = new RegExp('(\\s|^)' + "icon-bofang" + '(\\s|$)');  
+		    play.className = play.className.replace(reg, ' icon-bofang1');  
+			audio1.pause();
+		});
+		c3.addEventListener("click",function() {
+			if (audio1.volume<=0.9) {
+				audio1.volume = audio1.volume+0.1;
+			}else{
+				audio1.volume = 1;
+			};
+			vr.value = audio1.volume*100;
+		});
+		c4.addEventListener("click",function() {
+			if (audio1.volume>=0.1) {
+				audio1.volume = audio1.volume-0.1;
+			}else{
+				audio1.volume = 0;
+			};
+			vr.value = audio1.volume*100;
+		});
+		c6.addEventListener("click",function() {
+			var time  = audio1.duration;
+			audio1.currentTime = time/2;
+		});
+		c7.addEventListener("click",function() {
+			audio1.currentTime = 0.0;
+		});
+		c5.addEventListener("click",function() {
+			if (audio1.muted == true) {
+				vr.value = audio1.volume*100;
+				var reg = new RegExp('(\\s|^)' + "icon-xitongjingyin" + '(\\s|$)');  
+		    	v.className = v.className.replace(reg, ' icon-xitongjingyinquxiao');  
+				audio1.muted = false;
+			}else{
+				vr.value = 0;
+				var reg = new RegExp('(\\s|^)' + "icon-xitongjingyinquxiao" + '(\\s|$)');  
+		    	v.className = v.className.replace(reg, ' icon-xitongjingyin');  
+				audio1.muted = true;
+			};
+			
+		});
+	</script>
+</body>
+</html>
